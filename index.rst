@@ -59,7 +59,7 @@ This includes both potential alerts and potential performance metrics to underst
 Metrics
 -------
 
-As much as possible, the following metrics should be tagged with the authenticated user so that we can see metrics by user or trace a 500 error back to a specific user.
+As much as possible (and where there is an associated user), the following metrics should be tagged with the authenticated user so that we can see metrics by user or trace a 500 error back to a specific user.
 
 For each web application:
 
@@ -69,18 +69,20 @@ For each web application:
 - Performance buckets (p50, p90, p99) by route
 - Unique users
 
-From mobu:
+Kubernetes
+^^^^^^^^^^
 
-- Healthy / not healthy over time for each service
-- Success percentage over time (may be the same as healthy / not healthy)
-- Number of probes (so that we know if mobu is testing that service at all)
-- Performance buckets (p50, p90, p99) for the meaningful timers (i.e., not idles or intentional delays) for that monkey
+- CPU usage over time for pods, tagged with Argo CD application and separating out user notebook pods
+- Memory usage over time for pods, tagged with Argo CD application
+- API failures to the control plane by status code over time
 
 Gafaelfawr
 ^^^^^^^^^^
 
 - Internal and notebook token cache hits and misses
 - New token creation counts by token type over time
+- Total number of non-expired sessions
+- Total number of non-expired user tokens
 - Remaining token lifetime of requests, tagged with user and token type
 - Login failures
 - Admin actions taken
@@ -90,18 +92,46 @@ Image cutouts
 
 - Sync requests (tagged with success or failure)
 - Async requests (tagged with success or failure)
-- Performance metrics (p50, p90, p99) for cutout creation (this isn't retrievable from route metrics for async jobs)
+- Duration of processing for the request
+
+mobu
+^^^^
+
+- Healthy / not healthy over time for each service
+- Success/failure of each attempt, broken down by step for those probes that have multiple steps (such as notebook tests)
+- Number of probes (so that we know if mobu is testing that service at all)
+- Timing information for all meaningful timers (i.e., not idles or intentional delays)
+
+nublado
+^^^^^^^
+
+- Number of labs (ideally divided between active and idle)
+- Number of lab spawns over time
+
+TAP
+^^^
+
+- Number of sync and async TAP queries over time
+- Time required to complete a TAP query
+- Number of failed TAP queries
 
 Alerts
 ------
 
 The following alerts are good/bad alerts akin to Nagios probes rather than metric-based alerts.
-They should translate into Slack alerts when they fire.
+Many of the metrics may also have useful associated threshold alerts, which are not discussed in this section.
 
+These alerts should translate into Slack alerts when they fire.
+
+- External inaccessibility of a public-facing site
 - Remaining TLS certificate lifetime for each important public-facing site less than some threshold (30 days?)
 - Remaining Kubernetes control plane TLS certificate lifetime less than some threshold for every Kubernetes cluster (will require per-cluster monitoring infrastructure or some agent in each cluster that calls out to the monitoring system, due to firewalls)
 - Remaining lifetime of the tokens for our Vault service accounts
 - Argo CD applications in failed state
+- cachemachine failure to pre-pull images after more than some threshold of time
+- cert-manager fails to refresh a desired certificate
+- vault-secrets-operator fails to refresh a desired secret
+- neophile processing failed or produced errors on for a package
 
 We will also want some general infrastructure to run a validation script and have it report any findings to Slack.
 It may make sense to implement the above using the same mechanism.
@@ -116,6 +146,7 @@ Finally, we should probably have Slack alerts for some interesting events:
 - Vault secret creation
 - Vault secret deletion
 - Administrative cluster actions taken (notifying Slack when we sync an app in the production environment, for example)
+- Gafaelfawr token administrative actions taken, with exceptions for known routine cases such as mobu
 
 .. .. rubric:: References
 
