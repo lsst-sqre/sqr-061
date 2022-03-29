@@ -64,10 +64,9 @@ As much as possible (and where there is an associated user), the following metri
 For each web application:
 
 - Healthy / not healthy that ideally runs a synthetic transaction through any underlying database
-- Counters for each HTTP status
+- Counters or events for each HTTP status
 - Usage counters for each route, as identified by the application (not from the URL, since that will probably generate too many too-specific routes)
-- Performance buckets (p50, p90, p99) by route
-- Unique users
+- Time required to respond to each request by route
 
 Kubernetes
 ^^^^^^^^^^
@@ -93,6 +92,7 @@ Image cutouts
 - Sync requests (tagged with success or failure)
 - Async requests (tagged with success or failure)
 - Duration of processing for the request
+- Unique authenticated non-bot users in the past year, 90 days, 30 days, 7 days, and day
 
 mobu
 ^^^^
@@ -107,6 +107,13 @@ nublado
 
 - Number of labs (ideally divided between active and idle)
 - Number of lab spawns over time
+- Unique authenticated non-bot users in the past year, 90 days, 30 days, 7 days, and day
+
+Portal
+^^^^^^
+
+- Usage counts for which portions of the Portal users are using
+- Unique authenticated non-bot users in the past year, 90 days, 30 days, 7 days, and day
 
 TAP
 ^^^
@@ -114,6 +121,7 @@ TAP
 - Number of sync and async TAP queries over time
 - Time required to complete a TAP query
 - Number of failed TAP queries
+- Unique authenticated non-bot users in the past year, 90 days, 30 days, 7 days, and day
 
 Alerts
 ------
@@ -123,15 +131,25 @@ Many of the metrics may also have useful associated threshold alerts, which are 
 
 These alerts should translate into Slack alerts when they fire.
 
+General deployment alerts
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
 - External inaccessibility of a public-facing site
 - Remaining TLS certificate lifetime for each important public-facing site less than some threshold (30 days?)
 - Remaining Kubernetes control plane TLS certificate lifetime less than some threshold for every Kubernetes cluster (will require per-cluster monitoring infrastructure or some agent in each cluster that calls out to the monitoring system, due to firewalls)
 - Remaining lifetime of the tokens for our Vault service accounts
 - Argo CD applications in failed state
+
+Specific applications
+^^^^^^^^^^^^^^^^^^^^^
+
 - cachemachine failure to pre-pull images after more than some threshold of time
 - cert-manager fails to refresh a desired certificate
 - vault-secrets-operator fails to refresh a desired secret
 - neophile processing failed or produced errors on for a package
+
+Validation alerts
+^^^^^^^^^^^^^^^^^
 
 We will also want some general infrastructure to run a validation script and have it report any findings to Slack.
 It may make sense to implement the above using the same mechanism.
@@ -140,6 +158,9 @@ Example uses:
 - List all Route 53 DNS entries for IP addresses not controlled by Rubin
 - List all unexpected Kubernetes objects in a cluster (not part of Kubernetes itself and not managed by Argo CD)
 - Unexpected errors in the logs of some application (retrieved from Google's log aggregator, for instance)
+
+Interesting events
+^^^^^^^^^^^^^^^^^^
 
 Finally, we should probably have Slack alerts for some interesting events:
 
