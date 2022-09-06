@@ -44,10 +44,6 @@
 
 .. TODO: Delete the note below before merging new content to the master branch.
 
-.. note::
-
-   **This technote is not yet published.**
-
    Services and infrastructure underlying the RSP need to be instrumented to allow effective monitoring of performance and usage. This technote proposes the architectural approach for doing so. 
 
 Monitoring Server Implementation: Current state
