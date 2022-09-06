@@ -18,6 +18,8 @@ doc_title: "Monitoring architecture for the RSP"
 # Author names, ordered as a list. Each author name should be formatted as 'First Last'
 authors:
   - "Frossie Economou"
+  - "Russ Allbery"
+  - "Adam Thornton"
 
 # Current document revision date, YYYY-MM-DD
 # Only set this field if you need to manually fix the revision date;
@@ -34,7 +36,7 @@ authors:
 # doi: 10.5281/zenodo.#####
 
 # Copyright statement
-copyright: "2021, Association of Universities for Research in Astronomy, Inc. (AURA)"
+copyright: "2021-2022, Association of Universities for Research in Astronomy, Inc. (AURA)"
 
 # Description. A short, 1-2 sentence statemement used by document indices.
 description: "Services and infrastructure underlying the RSP need to be instrumented to allow effective monitoring of performance and usage. This technote proposes the architectural approach for doing so. "
