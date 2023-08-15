@@ -353,8 +353,9 @@ For each web application:
 
 - Healthy / not healthy that ideally runs a synthetic transaction through any underlying database
 - Counters or events for each HTTP status
-- Usage counters for each route, as identified by the application (not from the URL, since that will probably generate too many too-specific routes)
+- Usage counters for each route, as identified by the application (not from the URL, since that will probably generate too many too-specific routes) for a specific period
 - Time required to respond to each request by route
+- User agents/ calling service
 
 Kubernetes
 ``````````
@@ -362,6 +363,7 @@ Kubernetes
 - CPU usage over time for pods, tagged with Argo CD application and separating out user notebook pods
 - Memory usage over time for pods, tagged with Argo CD application
 - API failures to the control plane by status code over time
+- OOM kill statistics [nublado-users]
 
 Gafaelfawr
 ``````````
@@ -373,14 +375,19 @@ Gafaelfawr
 - Remaining token lifetime of requests, tagged with user and token type
 - Login failures
 - Admin actions taken
+- Distribution of "not seen since" times (and which users) (that would result in insights like "50% of users have not logged onto any services in the last 6 months")
+- Any user statistics per user group [eg project, science user]
 
-Image cutouts
-`````````````
+Image cutouts (or similar)
+``````````````````````````
 
 - Sync requests (tagged with success or failure)
 - Async requests (tagged with success or failure)
 - Duration of processing for the request
 - Unique authenticated non-bot users in the past year, 90 days, 30 days, 7 days, and day
+- Distribution of area sizes for the requested cutouts (returned size as a fraction of original size, or area of requested cutout)
+- Data type for basis of operation (PVI, coadd etc)
+- User frequency / long tail chart over a period (leads to insights like "70% of users have never used this service")
 
 mobu
 ````
@@ -393,9 +400,15 @@ mobu
 nublado
 ```````
 
-- Number of labs (ideally divided between active and idle)
+- Number of labs (ideally divided between active and idle) (now & timeseries)
 - Number of lab spawns over time
 - Unique authenticated non-bot users in the past year, 90 days, 30 days, 7 days, and day
+- User frequency / long tail chart over a period (leads to insights like "70% of users have never used this service but this one user hammers it 24/7")
+- any of our JupyterLab plugins - frequency of use
+
+Storage
+```````
+- Size of files in home space, distribution
 
 Portal
 ``````
@@ -403,13 +416,28 @@ Portal
 - Usage counts for which portions of the Portal users are using
 - Unique authenticated non-bot users in the past year, 90 days, 30 days, 7 days, and day
 
-TAP
-```
+TAP (or similar)
+````````````````
 
 - Number of sync and async TAP queries over time
-- Time required to complete a TAP query
+- Time required to complete a TAP query (distribution)
+- Time spent in service (after Qserv returns)
 - Number of failed TAP queries
 - Unique authenticated non-bot users in the past year, 90 days, 30 days, 7 days, and day
+- User frequency / long tail chart over a period (leads to insights like "70% of users have never used this service")
+- Size of returned results (distribution)
+- All of the above "per endpoint" for multiple endpoints (Qserv, Postgres)
+- Invoking user agent (portal, pyvo)
+
+Sasquatch/Influx
+````````````````
+
+- Number of topics
+- Frequency of data per topic
+- Volume rate per topic and overall
+- Query load
+- Queries and queries by user
+- Latency data
 
 Alerts
 ``````
