@@ -1,3 +1,11 @@
+###################################
+Monitoring architecture for the RSP
+###################################
+
+.. abstract::
+
+   Services and infrastructure underlying the RSP need to be instrumented to allow effective monitoring of performance and usage. This technote proposes the architectural approach for doing so. 
+
 ..
   Technote content.
 
@@ -36,11 +44,8 @@
 
    Feel free to delete this instructional comment.
 
-:tocdepth: 1
 
-.. Please do not modify tocdepth; will be fixed when a new Sphinx theme is shipped.
 
-.. sectnum::
 
 .. TODO: Delete the note below before merging new content to the master branch.
 
