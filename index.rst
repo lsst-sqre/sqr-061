@@ -399,8 +399,27 @@ Sasquatch/Influx
 - Queries and queries by user
 - Latency data
 
+Noteburst
+`````````
+
+`Noteburst <https://github.com/lsst-sqre/noteburst>`__ is an API service that has a set of arq-based queue worker pods.
+
+- Rate of jobs added
+- Rate of jobs completed
+- Rate of jobs failed
+- Distribution of job completion times
+- Distribution of time between job creation and when the job starts
+
+Times Square
+````````````
+
+`Times Square <https://github.com/lsst-sqre/times-square>`__ is an API service that also has arq-based queue worker pods to process background tasks like GitHub Check runs.
+
+- Average computation time for a specific notebook's execution on Noteburst (it needs to both supply this information and then consume it to publish to clients for progress bars; this is slightly different than the noteburst metric because its correllated with the Times Square page)
+- Number of page renders cached (e.g., size of a Redis DB)
+
 Alerts
-``````
+------
 
 The following alerts are good/bad alerts akin to Nagios probes rather than metric-based alerts.
 Many of the metrics may also have useful associated threshold alerts, which are not discussed in this section.
