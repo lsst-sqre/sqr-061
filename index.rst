@@ -329,14 +329,18 @@ Gafaelfawr
 ``````````
 
 - Internal and notebook token cache hits and misses
+- LDAP data cache hits and misses
 - New token creation counts by token type over time
 - Total number of non-expired sessions
 - Total number of non-expired user tokens
 - Remaining token lifetime of requests, tagged with user and token type
+- OpenID Connect authentications by registered OIDC client
 - Login failures
 - Admin actions taken
 - Distribution of "not seen since" times (and which users) (that would result in insights like "50% of users have not logged onto any services in the last 6 months")
 - Any user statistics per user group [eg project, science user]
+- Overall traffic by user and service, as input to rate limiting decisions
+- Rate limit rejections by user
 
 Image cutouts (or similar)
 ``````````````````````````
@@ -357,14 +361,18 @@ mobu
 - Number of probes (so that we know if mobu is testing that service at all)
 - Timing information for all meaningful timers (i.e., not idles or intentional delays)
 
-nublado
+Nublado
 ```````
 
 - Number of labs (ideally divided between active and idle) (now & timeseries)
 - Number of lab spawns over time
 - Unique authenticated non-bot users in the past year, 90 days, 30 days, 7 days, and day
 - User frequency / long tail chart over a period (leads to insights like "70% of users have never used this service but this one user hammers it 24/7")
-- any of our JupyterLab plugins - frequency of use
+- Frequency of use of any JupyterLab plugins
+- Number of running file servers (now & timeseries)
+- Number of file server spawns over time
+- Labs culled by the idle culler
+- Labs terminated because their maximum run time expired
 
 Storage
 ```````
