@@ -7,6 +7,7 @@ github_default_branch = "main"
 organization.name = "Vera C. Rubin Observatory"
 organization.ror = "https://ror.org/048g3cy84"
 license.id = "CC-BY-4.0"
+
 [[technote.authors]]
 name = {given = "Frossie", family = "Economou"}
 internal_id = "economouf"
@@ -32,6 +33,7 @@ orcid = "https://orcid.org/0000-0001-9342-6032"
 name = "Rubin Observatory Project Office"
 internal_id = "RubinObs"
 address = "950 N. Cherry Ave., Tucson, AZ 85719, USA"
+
 [[technote.authors]]
 name = {given = "Jonathan", family = "Sick"}
 internal_id = "sickj"
