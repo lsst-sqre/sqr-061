@@ -441,15 +441,20 @@ General deployment alerts
 - Remaining TLS certificate lifetime for each important public-facing site less than some threshold (30 days?)
 - Remaining Kubernetes control plane TLS certificate lifetime less than some threshold for every Kubernetes cluster (will require per-cluster monitoring infrastructure or some agent in each cluster that calls out to the monitoring system, due to firewalls)
 - Remaining lifetime of the tokens for our Vault service accounts
-- Argo CD applications in failed state (however, we should avoid alerting for a ``Job`` in a failed state if there is a newer execution of that ``Job`` that succeeded, and avoid alerting multiple times for the same failed ``Job``)
+- Argo CD applications in failed state.
+  However, we should avoid alerting for a ``Job`` in a failed state if there is a newer execution of that ``Job`` that succeeded, and avoid alerting multiple times for the same failed ``Job``.
 
 Specific applications
 `````````````````````
+
+Alerts for specific applications should ideally be dependency-aware so that they don't trigger if a known dependency is already raising an alert.
+This is a very difficult problem to solve in the general case, but some 80% heuristics might reduce a lot of noise.
 
 - Nublado controller failure to pre-pull images after more than some threshold of time
 - cert-manager fails to refresh a desired certificate
 - vault-secrets-operator fails to refresh a desired secret
 - Package fails to pass its tests if its dependencies are updated
+- Service is raising uncaught exceptions (deduplicating these would be useful to avoid floods)
 
 Validation alerts
 `````````````````
